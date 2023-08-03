@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -6,39 +6,61 @@ import {
   View,
   Image,
   Pressable,
+  FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ChatMessages from "../components/ChatMessages";
 
 const ChatScreen = () => {
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
-  const currentTimestamp = Date.now(); // Get the current timestamp in milliseconds
-  const dateObject = new Date(currentTimestamp); // Create a Date object from the timestamp
+  const fetchmessages = async () => {
+    try {
+      const response = await fetch(
+        "https://www.dadio.in/apps/serverapi/server/message-list.php?api_key=HASH490J669&user_id=1&pageid=0"
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setData(data.message_list);
+      }
+    } catch (err) {
+      console.log("error on fetching chat messages", err);
+    }
+  };
+  console.log("messages", data);
 
-  const timeOptions = { hour: "numeric", hour12: true };
-  const formattedTime = dateObject.toLocaleTimeString(undefined, timeOptions);
-
-  return (
-    <ScrollView>
-      <Pressable onPress={() => navigation.navigate("ChatMessages")}>
-        <View style={styles.chatContainer}>
-          <View style={styles.userInfoContainer}>
-            <Image
-              source={require("../assets/favicon.png")}
-              style={styles.userImage}
-              alt="user"
-            />
-            <View style={styles.userInfo}>
-              <Text style={styles.userName}>Mukul Tyagi</Text>
-              <Text>Hi</Text>
-            </View>
-          </View>
-          <View>
-            <Text style={styles.timeText}>{formattedTime}</Text>
-          </View>
+  const renderItem = ({ item }) => (
+    <Pressable
+      style={styles.chatContainer}
+      onPress={() => handleChatPress(item)}
+    >
+      <View style={styles.profileContainer}>
+        <Image style={styles.userImage} source={{ uri: item.profile_pic }} />
+      </View>
+      <View style={styles.userInfoContainer}>
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}>{item.display_name}</Text>
+          <Text style={styles.recentMessage}>
+            {item.msg_text.length > 25
+              ? item.msg_text.substring(0, 25) + "..."
+              : item.msg_text}
+          </Text>
         </View>
-      </Pressable>
-    </ScrollView>
+        <Text style={styles.timeText}>{item.msg_time}</Text>
+      </View>
+    </Pressable>
+  );
+
+  useEffect(() => {
+    fetchmessages();
+  }, []);
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 };
 
@@ -48,7 +70,7 @@ const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     margin: 10,
     borderBottomWidth: 1,
     padding: 15,
@@ -57,6 +79,7 @@ const styles = StyleSheet.create({
   userInfoContainer: {
     flex: 1,
     flexDirection: "row",
+    justifyContent:"space-between"
   },
   userImage: {
     backgroundColor: "red",
@@ -76,4 +99,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-

@@ -1,25 +1,54 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  FlatList,
+} from "react-native";
 
 const Notifications = () => {
-  const currentTimestamp = Date.now(); // Get the current timestamp in milliseconds
-  const dateObject = new Date(currentTimestamp); // Create a Date object from the timestamp
+  const [data, setData] = useState([]);
+  const navigation = useNavigation();
 
-  const timeOptions = { hour: "numeric", hour12: true };
-  const formattedTime = dateObject.toLocaleTimeString(undefined, timeOptions);
+  const notifications = async () => {
+    try {
+    const response = await fetch(
+      "https://www.dadio.in/apps/serverapi/server/notification.php?api_key=HASH490J669&user_id=1"
+    );
+    const data = await response.json();
+    if (data && data.notification_list) {
+      setData(data.notification_list);
+    } 
+  }catch(err) {
+    console.log(err);
+  }
+  };
+  console.log(data);
+  useEffect(() => {
+    notifications();
+  }, []);
 
-  return (
-    <ScrollView>
-      <View style={styles.notificationContainer}>
-        <Image
-          source={require("../assets/favicon.png")}
-          style={styles.userImage}
-          alt="user"
-        />
-        <Text style={styles.notificationText}>User Liked Your Profile.</Text>
-        <Text style={styles.timeText}>{formattedTime}</Text>
+  const renderItem = ({ item }) => (
+    <View style={styles.notificationContainer}>
+      <View style={styles.profileContainer}>
+        <Image style={styles.userImage} source={{ uri: item.profile_pic }} />
       </View>
-    </ScrollView>
+      <View style={styles.notificationTextContainer}>
+        <Text style={styles.notificationMsg}>{item.notification_msg}</Text>
+        <Text style={styles.notificationDate}>{item.notification_date}</Text>
+      </View>
+    </View>
+  );
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item,index) => index.toString()}
+    />
   );
 };
 
@@ -27,22 +56,31 @@ export default Notifications;
 
 const styles = StyleSheet.create({
   notificationContainer: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 20,
+    alignItems: "center",
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  profileContainer: {
+    marginRight: 16,
   },
   userImage: {
     backgroundColor: "red",
     height: 50,
     width: 50,
-    borderRadius: 50,
+    borderRadius: 25,
   },
-  notificationText: {
-    marginTop: 10,
+  notificationTextContainer: {
+    flex: 1,
   },
-  timeText: {
-    marginTop: 10,
+  notificationMsg: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  notificationDate: {
+    color: "#888",
   },
 });
 

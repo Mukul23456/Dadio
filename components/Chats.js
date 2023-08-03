@@ -1,14 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useNavigation } from "@react-navigation/native";
 import ChatScreen from "../ChatsComponents/ChatScreen";
 import CallsScreen from "../ChatsComponents/CallsScreen";
-import { Ionicons } from "@expo/vector-icons";
 const Tab = createMaterialTopTabNavigator();
 
 const Chats = () => {
-  const navigation = useNavigation();
   StatusBar.setBackgroundColor("rgb(164, 172, 129)");
   return (
     <SafeAreaView
