@@ -6,10 +6,7 @@ import Notifications from "../components/Notifications";
 import Random from "../components/Random";
 import Chats from "../components/Chats";
 import Profile from "../components/Profile";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import { AntDesign, Ionicons, FontAwesome, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
@@ -17,15 +14,15 @@ const Tab = createBottomTabNavigator();
 const Main = () => {
   const navigation = useNavigation();
   return (
+
+    
     <Tab.Navigator screenOptions={{ showLabel: false }}>
       <Tab.Screen
         name="Preference"
         component={Preference}
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <AntDesign name="heart" size={35} color="red" />
-          ),
+          tabBarIcon: () => <AntDesign name="heart" size={35} color="red" />,
         }}
       />
       <Tab.Screen
@@ -34,7 +31,7 @@ const Main = () => {
         options={{
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Preference')}
+              onPress={() => navigation.navigate("Preference")}
               style={styles.backButton}
             >
               <Ionicons name="arrow-back" size={25} color="black" />
@@ -60,9 +57,7 @@ const Main = () => {
         component={Chats}
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <Entypo name="chat" size={35} color="green" />
-          ),
+          tabBarIcon: () => <Entypo name="chat" size={35} color="green" />,
         }}
       />
       <Tab.Screen
@@ -85,11 +80,8 @@ const Main = () => {
 
 export default Main;
 
-
-
 const styles = StyleSheet.create({
   backButton: {
     marginLeft: 10,
   },
 });
-

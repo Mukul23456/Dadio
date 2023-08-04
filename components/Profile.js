@@ -109,7 +109,7 @@ const Profile = () => {
               <Feather name="info" size={20} color="lightgray" />
               <Text style={styles.optionText}>About Me</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionRow}>
+            <TouchableOpacity style={styles.optionRow} onPress={()=>navigation.navigate('BasicInfo')}>
               <Entypo name="info-with-circle" size={20} color="lightgray" />
               <Text style={styles.optionText}>Basic Info</Text>
             </TouchableOpacity>
@@ -199,7 +199,7 @@ const Profile = () => {
               />
               <Text style={styles.optionText}>My chat Subscription</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionRow}>
+            <TouchableOpacity style={styles.optionRow} onPress={()=>navigation.navigate('MyGift')}>
               <MaterialCommunityIcons
                 name="gift-outline"
                 size={24}
@@ -207,7 +207,7 @@ const Profile = () => {
               />
               <Text style={styles.optionText}>My Gifts</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionRow}>
+            <TouchableOpacity style={styles.optionRow} onPress={()=>navigation.navigate('GiftShop')}>
               <MaterialCommunityIcons name="gift" size={24} color="lightgray" />
               <Text style={styles.optionText}>Gift Shop</Text>
             </TouchableOpacity>

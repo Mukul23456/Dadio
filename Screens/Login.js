@@ -1,18 +1,14 @@
-import { StyleSheet, Text, View,Pressable } from 'react-native'
-import React from 'react'
-import { FontAwesome } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { useNavigation } from '@react-navigation/native';
-
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import React from "react";
+import { FontAwesome, FontAwesome5, EvilIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
-    const navigation = useNavigation(); 
-    
-   
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <View >
+      <View>
         <Text style={styles.title}>Dadio</Text>
       </View>
       <View style={styles.buttonContainer}>
@@ -25,7 +21,7 @@ const Login = () => {
             },
           ]}
           android_ripple={{ color: "lightgray" }}
-          onPress={()=> navigation.navigate('UserLogin')}
+          onPress={() => navigation.navigate("UserLogin")}
         >
           <FontAwesome name="user" size={24} color="white" />
           <Text style={styles.buttonText}>User Login</Text>
@@ -63,43 +59,43 @@ const Login = () => {
         </Pressable>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    title: {
-      fontSize: 50,
-      fontWeight: "bold",
-    },
-    buttonContainer: {
-      marginTop: 25,
-      alignItems: "center",
-    },
-    button: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      height: 50,
-      width: 300, // You can adjust this width as needed
-      borderWidth: 1,
-      borderRadius: 50,
-      marginBottom: 20,
-    },
-    buttonText: {
-      marginLeft: 10,
-      color: "white",
-      fontSize: 16,
-      fontWeight: "800",
-    },
-    agreement: {
-      marginTop: 5,
-      fontSize: 12,
-    },
-  });
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 50,
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    marginTop: 25,
+    alignItems: "center",
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    width: 300, // You can adjust this width as needed
+    borderWidth: 1,
+    borderRadius: 50,
+    marginBottom: 20,
+  },
+  buttonText: {
+    marginLeft: 10,
+    color: "white",
+    fontSize: 16,
+    fontWeight: "800",
+  },
+  agreement: {
+    marginTop: 5,
+    fontSize: 12,
+  },
+});

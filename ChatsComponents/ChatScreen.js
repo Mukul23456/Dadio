@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import ChatMessages from "../components/ChatMessages";
 
 const ChatScreen = () => {
   const [data, setData] = useState([]);
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
   userInfoContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
   userImage: {
     backgroundColor: "red",

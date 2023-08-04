@@ -1,12 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-  ScrollView,
   StyleSheet,
   Text,
   View,
   Image,
-  Pressable,
   FlatList,
 } from "react-native";
 
