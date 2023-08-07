@@ -64,9 +64,9 @@ const UserLogin = () => {
         case 600:
           Alert.alert("User inactive");
           break;
-        default:
-          Alert.alert("Error");
-          break;
+          default:
+            Alert.alert("Error");
+            break;
       }
       if (data.res_status === 'success') {
         navigation.navigate('Main');

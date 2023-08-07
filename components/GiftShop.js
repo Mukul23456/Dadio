@@ -31,7 +31,10 @@ const GiftShop = () => {
     </View>
   );
 
+  
+
   return (
+    <View style={{ flex: 1 }}>
     <FlatList
       data={data}
       renderItem={renderItem}
@@ -39,6 +42,7 @@ const GiftShop = () => {
       numColumns={2}
       contentContainerStyle={styles.container}
     />
+    </View> 
   );
 };
 

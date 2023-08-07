@@ -14,6 +14,15 @@ import Personprofile from "./components/Personprofile";
 import MyGift from "./components/MyGift";
 import BasicInfo from "./components/BasicInfo";
 import GiftShop from "./components/GiftShop";
+import MySearchPreference from "./components/searchUserComponents/MySearchPreference";
+import OnlineUsers from "./components/searchUserComponents/OnlineUsers";
+import PrivacyControls from "./components/PrivacyandSecurity/PrivacyControls";
+import UpdatePassword from "./components/PrivacyandSecurity/UpdatePassword";
+import Mypoints from "./components/Pointsandgiftshop/Mypoints";
+import EarnedPoints from "./components/Pointsandgiftshop/EarnedPoints";
+import SpendPoints from "./components/Pointsandgiftshop/SpendPoints";
+import PayoutLog from "./components/Pointsandgiftshop/PayoutLog";
+import MyChatSubscriptions from "./components/Pointsandgiftshop/MyChatSubscriptions";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +48,6 @@ export default function StackNavigator() {
         <Stack.Screen
           name="Personprofile"
           component={Personprofile}
-          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ChatMessages"
@@ -76,6 +84,42 @@ export default function StackNavigator() {
         <Stack.Screen
           name="GiftShop"
           component={GiftShop}
+        />
+        <Stack.Screen
+          name="My Preference"
+          component={MySearchPreference}
+        />
+        <Stack.Screen
+          name="Online User"
+          component={OnlineUsers}
+        />
+        <Stack.Screen
+          name="Privacy Controls"
+          component={PrivacyControls}
+        />
+        <Stack.Screen
+          name="Update Password"
+          component={UpdatePassword}
+        />
+        <Stack.Screen
+          name="My Points"
+          component={Mypoints}
+        />
+        <Stack.Screen
+          name="Earned Points"
+          component={EarnedPoints}
+        />
+        <Stack.Screen
+          name="Spend Points"
+          component={SpendPoints}
+        />
+        <Stack.Screen
+          name="Payout Log"
+          component={PayoutLog}
+        />
+        <Stack.Screen
+          name="Buy Chat Subcription"
+          component={MyChatSubscriptions}
         />
       </Stack.Navigator>
     </NavigationContainer>

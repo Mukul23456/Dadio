@@ -6,6 +6,7 @@ import {
   View,
   Image,
   FlatList,
+  Pressable,
 } from "react-native";
 
 const Notifications = () => {
@@ -31,7 +32,7 @@ const Notifications = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View style={styles.notificationContainer}>
+    <Pressable style={styles.notificationContainer} onPress={()=>navigation.navigate("Personprofile")}>
       <View style={styles.profileContainer}>
         <Image style={styles.userImage} source={{ uri: item.profile_pic }} />
       </View>
@@ -39,7 +40,7 @@ const Notifications = () => {
         <Text style={styles.notificationMsg}>{item.notification_msg}</Text>
         <Text style={styles.notificationDate}>{item.notification_date}</Text>
       </View>
-    </View>
+    </Pressable>
   );
   return (
     <FlatList
