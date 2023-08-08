@@ -9,45 +9,41 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import {useUser} from '../UserContext'
 
 const UserLogin = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserData } = useUser();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const handleForgotPassword = () => {
-    console.log("Forgot Password Email:", email);
-    toggleModal();
-  };
-
   const handleLogin = async () => {
-    const apiURL = 'https://www.dadio.in/apps/serverapi/server/login.php';
-    const apiKey = 'HASH490J669';
-    
+    const apiURL = "https://www.dadio.in/apps/serverapi/server/login.php";
+    const apiKey = "HASH490J669";
+
     // Create the request body with email and password
     const requestBody = new FormData();
-    requestBody.append('api_key', apiKey);
-    requestBody.append('email_id', email);
-    requestBody.append('password', password);
-  
+    requestBody.append("api_key", apiKey);
+    requestBody.append("email_id", email);
+    requestBody.append("password", password);
 
     try {
       const response = await fetch(apiURL, {
-        method : 'POST',
+        method: "POST",
         body: requestBody,
       });
       const data = await response.json();
       console.log(data);
       switch (data.res_status) {
-        case 'success':
+        case "success":
           const userId = data.user_id;
           const userName = data.name;
-          
+
           break;
         case 200:
           Alert.alert("Empty email");
@@ -64,12 +60,17 @@ const UserLogin = () => {
         case 600:
           Alert.alert("User inactive");
           break;
-          default:
-            Alert.alert("Error");
-            break;
+        default:
+          Alert.alert("Error");
+          break;
       }
-      if (data.res_status === 'success') {
-        navigation.navigate('Main');
+      if (data.res_status === "success") {
+        setUserData({
+          email: data.email_id,
+          displayName: data.display_name,
+          name: data.name, // Set the user's name
+        });
+        navigation.navigate("Main");
       }
     } catch (err) {
       console.log(err);
@@ -88,7 +89,7 @@ const UserLogin = () => {
             style={styles.input}
             placeholder="Enter Email id"
             value={email}
-            onChangeText={(text)=>setEmail(text)}
+            onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
             autoCapitalize="none"
           />
@@ -99,15 +100,12 @@ const UserLogin = () => {
             style={styles.input}
             placeholder="Enter Password"
             value={password}
-            onChangeText={(text)=>setPassword(text)}
+            onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}
             autoCapitalize="none"
           />
         </View>
-        <Pressable
-          style={styles.submitButton}
-          onPress={handleLogin}
-        >
+        <Pressable style={styles.submitButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
         <Pressable onPress={toggleModal}>
@@ -131,10 +129,7 @@ const UserLogin = () => {
               autoCapitalize="none"
               onChangeText={(text) => setEmail(text)}
             />
-            <Pressable
-              style={styles.modalSubmitButton}
-              onPress={handleForgotPassword}
-            >
+            <Pressable style={styles.modalSubmitButton}>
               <Text style={styles.modalButtonText}>Submit</Text>
             </Pressable>
             <Pressable style={styles.closeButton} onPress={toggleModal}>

@@ -1,10 +1,44 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable,Alert } from "react-native";
 import React from "react";
 import { FontAwesome, FontAwesome5, EvilIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
   const navigation = useNavigation();
+  const handleSocialMediaLogin = async (action,email) => {
+    const apiURL = `https://www.dadio.in/apps/serverapi/server/socialmedia-login.php?api_key=HASH490J669`;
+    
+    // Determine the social media platform based on the action parameter
+    const platform = action === 'facebook' ? 'Facebook' : 'Google';
+    
+    try {
+      // Make the API request
+      const response = await fetch(apiURL, {
+        method: "POST",
+        body: JSON.stringify({
+          name: platform,
+          email: email, 
+          action: action,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      // Handle the response based on the res_status
+      if (data.res_status === "success") {
+        // Successful login
+        navigation.navigate("Main"); // Replace "Main" with your desired destination
+      } else {
+        // Handle other cases, e.g., invalid action, error, etc.
+        Alert.alert("An error occurred. Please try again later.");
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("An error occurred. Please try again later.");
+    }
+  };
+
 
   return (
     <View style={styles.container}>
@@ -32,6 +66,8 @@ const Login = () => {
             { backgroundColor: "red", borderColor: "red" },
           ]}
           android_ripple={{ color: "lightgray" }}
+          onPress={() => handleSocialMediaLogin("google", encodeURIComponent("kalabccba@gmail.com"))}
+
         >
           <FontAwesome5 name="google" size={24} color="white" />
           <Text style={styles.buttonText}>Login With Google</Text>
@@ -45,6 +81,7 @@ const Login = () => {
             },
           ]}
           android_ripple={{ color: "lightgray" }}
+          onPress={() => handleSocialMediaLogin("facebook","kalabccba@gmail.com")}
         >
           <EvilIcons name="sc-facebook" size={28} color="white" />
           <Text style={styles.buttonText}>Login With Facebook</Text>

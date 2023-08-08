@@ -6,10 +6,14 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  Alert
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
+
+const API_KEY = "HASH490J669";
+const SEARCH_API_ENDPOINT = "https://www.dadio.in/apps/serverapi/server/search-userid.php";
 const SearchUsers = () => {
     // Handle Search User modal
   const [isSearchUserModalVisible, setIsSearchUserModalVisible] =
@@ -24,9 +28,32 @@ const handleProfileIdChange = (text) => {
   setProfileId(text);
 };
 
-const handleSearchUser = () => {
-  // Perform the search logic here with the entered profileId
-  console.log("Searching for profile ID:", profileId);
+const handleSearchUser = async () => {
+  if (!profileId) {
+    Alert.alert("Error", "Please enter a Profile ID.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${SEARCH_API_ENDPOINT}?api_key=${API_KEY}&user_id=1&profile_id=2&user_searchid=${encodeURIComponent(profileId)}`
+    );
+
+    const data = await response.json();
+console.log("searched user",data)
+    if (data.res_status === "success") {
+      // Handle successful search here
+      console.log("User found:", data);
+      Alert.alert("User Found")
+    } else if (data.res_status === "invalid_id") {
+      // Handle invalid ID case here
+      console.log("Invalid user ID.");
+      Alert.alert("Error", "Invalid user ID.");
+    }
+  } catch (error) {
+    console.error("Error searching user:", error);
+  }
+
   // Clear the input and close the modal
   setProfileId("");
   setIsSearchUserModalVisible(false);

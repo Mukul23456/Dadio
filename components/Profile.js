@@ -12,16 +12,19 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import NeedHelp from "./NeedHelp/NeedHelp";
 import Privacyandsecurity from "./PrivacyandSecurity/Privacyandsecurity";
 import PointsAndGiftsShop from "./Pointsandgiftshop/PointsAndGiftsShop";
 import MyProfile from "./MyProfileComponents/MyProfile";
 import SearchUser from "./searchUserComponents/SearchUser";
 import ProfileImage from "./ProfileImage";
+import { useUser } from "../UserContext";
 
 const Profile = () => {
   const [data,setData] = useState('');
+  const route = useRoute();
+  const { userData } = useUser(); 
   const fetchprofile = async() => {
     try{
 const response = await fetch("https://www.dadio.in/apps/serverapi/server/setprofilepicture.php?api_key=HASH490J669&user_id=1");
@@ -73,8 +76,8 @@ fetchprofile();
             <FontAwesome name="user" size={26} color="gray" />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Isha</Text>
-            <Text>dadiodating3@gmail.com</Text>
+            <Text style={styles.title}>{userData.displayName}</Text>
+            <Text>{userData.email}</Text>
           </View>
         </View>
 

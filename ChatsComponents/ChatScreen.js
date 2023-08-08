@@ -32,7 +32,11 @@ const ChatScreen = () => {
   const renderItem = ({ item }) => (
     <Pressable
       style={styles.chatContainer}
-      onPress={() => handleChatPress(item)}
+      onPress={() => navigation.navigate("ChatMessages", {
+        profilePicUri: item.profile_pic,
+        displayName:item.display_name,
+        profileId:item.profile_id
+      })}
     >
       <View style={styles.profileContainer}>
         <Image style={styles.userImage} source={{ uri: item.profile_pic }} />
